@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncorked Potential: Startup & Wine Icebreaker</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://source.unsplash.com/featured/?winery') center/cover no-repeat;
+        }
+
+        .card {
+            width: 300px;
+            height: 450px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #722F37 0%, #722F37 100%);
+            color: #fff;
+        }
+
+        .card-front {
+            background: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .card-category {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .card-question {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            min-width: 100px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #722F37;
+        }
+
+        #drawBtn {
+            background-color: #722F37;
+            border-color: #722F37;
+            color: #fff;
+        }
+
+        #drawBtn:hover {
+            background-color: #5a252c;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 30px auto;
+        }
+
+        @keyframes slideOutLeft {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card.slide-out {
+            animation: slideOutLeft 0.4s forwards;
+        }
+
+        .card.fade-in {
+            animation: fadeIn 0.4s;
+        }
+
+        .card-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card.no-transition .card-inner {
+            transition: none;
+        }
+
+
+        .draw-container {
+            margin: 0 auto;
+        }
+
+        .lower-controls {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #resetBtn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #drawn-counter {
+            color: black;
+            font-size: 14px;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-face card-back">
+                <div class="card-title">Uncorked Potential</div>
+                <div class="logo">
+                    <svg viewBox="0 0 100 100">
+                        <path d="M50 10 L60 40 Q65 60 50 80 Q35 60 40 40 Z" fill="none" stroke="#fff"
+                            stroke-width="2" />
+                        <circle cx="50" cy="30" r="5" fill="#fff" />
+                    </svg>
+                </div>
+                <div class="card-category" id="categoryName"></div>
+                <div class="button-container">
+                    <button class="btn" id="skipBtn">Skip</button>
+                    <button class="btn" id="revealBtn">Reveal</button>
+                </div>
+            </div>
+            <div class="card-face card-front">
+                <div class="card-question" id="questionText"></div>
+                <div class="button-container draw-container">
+                    <button class="btn" id="drawBtn">Draw Another</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lower-controls">
+        <div id="drawn-counter"></div>
+        <button id="resetBtn">Reset</button>
+    </div>
+    <script src="cards.js"></script>
+    <script>
+        const card = document.querySelector('.card');
+        const categoryNameElement = document.getElementById('categoryName');
+        const questionTextElement = document.getElementById('questionText');
+        const drawnCounterElement = document.getElementById('drawn-counter');
+        const skipBtn = document.getElementById('skipBtn');
+        const revealBtn = document.getElementById('revealBtn');
+        const drawBtn = document.getElementById('drawBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let isDrawingNew = false;
+        let drawnCards = [];
+        let currentCategory, currentQuestion;
+
+        // Load game state from local storage
+        function loadGameState() {
+            const savedState = localStorage.getItem('uncokedPotentialState');
+            if (savedState) {
+                drawnCards = JSON.parse(savedState);
+            }
+        }
+
+        // Save game state to local storage
+        function saveGameState() {
+            localStorage.setItem('uncokedPotentialState', JSON.stringify(drawnCards));
+        }
+
+        function drawCard(animate = false) {
+            if (drawnCards.length === cardData.categories.reduce((total, category) => total + category.questions.length, 0)) {
+                alert("All cards have been drawn! The game will reset.");
+                resetGame();
+                return;
+            }
+
+            let randomCategoryIndex, randomQuestionIndex;
+            do {
+                randomCategoryIndex = Math.floor(Math.random() * cardData.categories.length);
+                randomQuestionIndex = Math.floor(Math.random() * cardData.categories[randomCategoryIndex].questions.length);
+            } while (drawnCards.some(card => card.categoryIndex === randomCategoryIndex && card.questionIndex === randomQuestionIndex));
+
+            currentCategory = cardData.categories[randomCategoryIndex];
+            currentQuestion = currentCategory.questions[randomQuestionIndex];
+
+            drawnCards.push({ categoryIndex: randomCategoryIndex, questionIndex: randomQuestionIndex });
+
+            saveGameState();
+
+            if (animate) {
+                isDrawingNew = true;
+                card.classList.add('slide-out');
+                setTimeout(() => {
+                    updateCardContent();
+                    card.classList.add('no-transition');
+                    card.classList.remove('slide-out', 'flipped');
+                    card.offsetHeight; // Trigger reflow
+                    card.classList.remove('no-transition');
+                    card.classList.add('fade-in');
+                    setTimeout(() => {
+                        card.classList.remove('fade-in');
+                        isDrawingNew = false;
+                    }, 500);
+                }, 500);
+            } else {
+                updateCardContent();
+            }
+
+            updateResetButtonVisibility();
+        }
+
+        const totalCards = cardData.categories.reduce((total, category) => total + category.questions.length, 0);
+        function updateCardContent() {
+            drawnCounterElement.textContent = `${drawnCards.length} / ${totalCards} drawn`;
+            categoryNameElement.textContent = currentCategory.name;
+            categoryNameElement.style.backgroundColor = currentCategory.color;
+            questionTextElement.textContent = currentQuestion;
+
+            skipBtn.style.display = 'inline-block';
+            revealBtn.style.display = 'inline-block';
+        }
+
+        function revealCard() {
+            if (!isDrawingNew) {
+                card.classList.add('flipped');
+                skipBtn.style.display = 'none';
+                revealBtn.style.display = 'none';
+            }
+        }
+
+        function resetGame() {
+            drawnCards = [];
+            saveGameState();
+            drawCard();
+            updateResetButtonVisibility();
+        }
+
+        function updateResetButtonVisibility() {
+            resetBtn.style.display = drawnCards.length > 0 ? 'block' : 'none';
+        }
+
+        skipBtn.addEventListener('click', () => drawCard(true));
+        revealBtn.addEventListener('click', revealCard);
+        drawBtn.addEventListener('click', () => drawCard(true));
+        resetBtn.addEventListener('click', resetGame);
+
+        // Initialize the game
+        loadGameState();
+        if (drawnCards.length === 0) {
+            drawCard();
+        } else {
+            drawCard(true);
+        }
+        updateResetButtonVisibility();
+    </script>
+</body>
+
+</html>
