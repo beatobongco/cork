@@ -2,4 +2,4 @@
 
 A fun little icebreaker for startup friend gatherings!
 
-https://cork.beatobongco.com
+https://beatobongco.com/cork

@@ -130,6 +130,33 @@ const cardData = {
                 "How do you maintain a healthy relationship with technology outside of work?",
                 "What's your approach to creating a comfortable and productive home office environment?"
             ]
+        },
+        {
+            "name": "Wild Vines",
+            "color": "#27AE60",
+            "questions": [
+                "If your startup was a superhero, what would be its superpower?",
+                "What's the most ridiculous startup idea you can come up with right now?",
+                "If you could have any tech icon as your personal assistant for a day, who would it be and why?",
+                "What's the funniest bug you've ever encountered or heard about?",
+                "If you could instantly download one skill into your brain, Matrix-style, what would it be?",
+                "What's your go-to dance move when nobody's watching?",
+                "If you had to give up either your smartphone or coffee for a month, which would you choose?",
+                "What's the most useless app idea you can think of that people might actually download?",
+                "If your life had a theme song, what would it be?",
+                "What's the weirdest food combination you enjoy that others find strange?",
+                "If you could create a holiday, what would it celebrate and what would be the traditions?",
+                "What's the most embarrassing thing you've done in a video call?",
+                "If you could have dinner with any three people, dead or alive, who would they be and why?",
+                "What's the worst piece of tech you've ever owned but couldn't let go of?",
+                "If you were a kitchen appliance, which one would you be and why?",
+                "What's the strangest thing you've ever used as a makeshift programming tool?",
+                "If your pet could talk, what tech secrets do you think they would spill about you?",
+                "What's the most absurd startup perk you've heard of or can imagine?",
+                "If you could teleport anywhere right now, where would you go and what would you do?",
+                "What's your best \"two truths and a lie\" about your tech life?"
+        
+            ],
         }
     ]
 }
